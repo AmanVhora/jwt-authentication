@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user, only: %i[create]
+  skip_before_action :authenticate_user, only: %i[index create]
   before_action :find_user, only: %i[show update destroy authorize_user]
   before_action :authorize_user, only: %i[show update destroy]
 
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: 201
     else
-      render json: { errors: @user.errors.full_messages }, status: 503
+      render json: { errors: @user.errors.full_messages }, status: 422
     end
   end
 
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: @user, status: 200
     else
-      render json: { errors: @user.errors.full_messages }, status: 503
+      render json: { errors: @user.errors.full_messages }, status: 422
     end
   end
 
