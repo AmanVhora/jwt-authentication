@@ -52,3 +52,5 @@ gem "jwt", "~> 2.7"
 gem "bcrypt", "~> 3.1"
 
 gem "rack-cors", "~> 2.0"
+
+gem "activestorage", "~> 7.0"
