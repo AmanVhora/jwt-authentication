@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   skip_before_action :authenticate_user, only: %i[index]
-  before_action :find_post, only: %i[ show update destroy authorize_user]
+  before_action :find_post, only: %i[show update destroy authorize_user]
   before_action :authorize_user, only: %i[show update destroy]
 
   def index
@@ -15,7 +15,7 @@ class PostsController < ApplicationController
   def create
     post = @current_user.posts.new(post_params)
     if post.save
-      render json: { message: 'Post successfully created', post: post }, status: :created, location: post
+      render json: post, status: :created, location: post
     else
       render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      render json: { message: 'Post successfully updated', post: @post }
+      render json: @post
     else
       render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
     end
@@ -44,7 +44,7 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.permit(:image, :caption)
+      params.require(:post).permit(:caption, images: [])
     end
 
     def authorize_user

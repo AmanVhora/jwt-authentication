@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
   belongs_to :user
-  has_one_attached :image
-  validates :image, :caption, presence: true
+  has_many_attached :images
+  validates :images, :caption, presence: true
 end
