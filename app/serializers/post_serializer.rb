@@ -4,7 +4,7 @@ class PostSerializer < ActiveModel::Serializer
   def images_urls
     if object.images.attached?
       object.images.map do |image|
-        Rails.application.routes.url_helpers.rails_blob_url(image, only_path: true)
+        Rails.application.routes.url_helpers.rails_blob_url(image, only_path: false)
       end
     end
   end
